@@ -1,9 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- Base application theme -->
     <style name="Base.Theme.AgriConnect" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Customize your light theme here -->
+        <item name="colorPrimary">@color/green</item> <!-- your app’s main green -->
+        <item name="colorPrimaryVariant">@color/green</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <!-- ✅ Status bar customization -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- ✅ Apply Himalaya font everywhere -->
+        <item name="android:fontFamily">@font/himalaya</item>
+        <item name="fontFamily">@font/himalaya</item>
+
+        <!-- ✅ Navigation bar (optional, bottom bar where back/home/recent buttons are) -->
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
+    <!-- App theme -->
     <style name="Theme.AgriConnect" parent="Base.Theme.AgriConnect" />
 </resources>

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">AgriConnect</string>
+    <string name="signupacc"><font color='#000000'>Already have account?</font><font color='#3A9C4C'> Sign in</font></string>
+    <string name="signinacc"><font color='#000000'>Dont have an account?</font><font color='#3A9C4C'> Sign in</font></string>
+
+    <string name="default_web_client_id">YOUR_CLIENT_ID.apps.googleusercontent.com</string>
+    <string name="agriconnect"><font color='#000000'>Agri</font><font color='#3A9C4C'>Connect</font></string>
+    <string name="agriconnect2"><font color='#000000'>Linking</font><font color='#3A9C4C'> Farmers</font> <font color='#000000'> with</font>
+        <font color='#3A9C4C'> Consumers </font><font color='#000000'> made</font><font color='#3A9C4C'> easy</font> </string>
+
+
 </resources>
