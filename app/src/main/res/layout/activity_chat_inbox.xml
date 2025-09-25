@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/txtChatId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chat ID"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtLastMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last message preview"/>
+</LinearLayout>

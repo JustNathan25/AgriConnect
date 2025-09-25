@@ -6,17 +6,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.agriconnect.R
 import com.example.agriconnect.model.Product
 
-class ProductAdapter(private val products: List<Product>) :
-    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(
+    private val productList: List<Product>,
+    private val onItemClick: (Product) -> Unit // click listener
+) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val productImage: ImageView = itemView.findViewById(R.id.productImage)
-        val productName: TextView = itemView.findViewById(R.id.productName)
-        val productPrice: TextView = itemView.findViewById(R.id.productPrice)
-        val productLocation: TextView = itemView.findViewById(R.id.productLocation)
+        val imgProduct: ImageView = itemView.findViewById(R.id.productImage)
+        val tvProductName: TextView = itemView.findViewById(R.id.productName)
+        val tvProductPrice: TextView = itemView.findViewById(R.id.productPrice)
+        val tvProductLocation: TextView = itemView.findViewById(R.id.productLocation)
+        val tvProductCondition: TextView = itemView.findViewById(R.id.productCondition)
+        val tvProductDescription: TextView = itemView.findViewById(R.id.productDescription)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -26,12 +31,29 @@ class ProductAdapter(private val products: List<Product>) :
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = products[position]
-        holder.productName.text = product.name
-        holder.productPrice.text = product.price
-        holder.productLocation.text = product.location
-        holder.productImage.setImageResource(product.imageRes) // assuming local drawable
+        val product = productList[position]
+
+        holder.tvProductName.text = product.name
+        holder.tvProductPrice.text = "₱%.2f".format(product.price)
+        holder.tvProductLocation.text = product.locationName
+        holder.tvProductCondition.text = "Condition: ${product.condition}"
+        holder.tvProductDescription.text = product.description
+
+        // Load the FIRST image (for preview in list)
+        if (product.images.isNotEmpty()) {
+            Glide.with(holder.itemView.context)
+                .load(product.images[0]) // first image URL
+                .placeholder(R.drawable.sample_product)
+                .into(holder.imgProduct)
+        } else {
+            holder.imgProduct.setImageResource(R.drawable.sample_product)
+        }
+
+        // Handle item click
+        holder.itemView.setOnClickListener {
+            onItemClick(product)
+        }
     }
 
-    override fun getItemCount(): Int = products.size
+    override fun getItemCount(): Int = productList.size
 }

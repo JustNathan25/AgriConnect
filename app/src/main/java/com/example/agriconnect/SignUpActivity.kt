@@ -13,12 +13,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +28,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         // Configure Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -48,10 +51,15 @@ class SignUpActivity : AppCompatActivity() {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
+                        Log.d("SignUpActivity", "createUserWithEmail: success")
+                        redirectUser()
                     } else {
-                        Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                        Log.w("SignUpActivity", "createUserWithEmail: failure", task.exception)
+                        Toast.makeText(
+                            this,
+                            "Error: ${task.exception?.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
         }
@@ -82,11 +90,55 @@ class SignUpActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    Log.d("SignUpActivity", "signInWithCredential: success")
+                    redirectUser()
                 } else {
+                    Log.w("SignUpActivity", "signInWithCredential: failure", task.exception)
                     Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    /**
+     * Redirect user after signup/signin.
+     * Checks Firestore `users/{uid}` for displayName.
+     */
+    private fun redirectUser() {
+        val uid = auth.currentUser?.uid ?: return
+        val email = auth.currentUser?.email ?: ""
+
+        val userDocRef = firestore.collection("users").document(uid)
+
+        userDocRef.get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists() && snapshot.getString("displayName")?.isNotEmpty() == true) {
+                // ✅ Name already set → go to dashboard
+                startActivity(Intent(this, DashboardActivity::class.java))
+                finish()
+            } else {
+                // 🆕 First time: create/update doc with uid + email + empty displayName
+                val newUser = hashMapOf(
+                    "uid" to uid,
+                    "email" to email,
+                    "displayName" to "" // empty until SetDisplayNameActivity updates it
+                )
+                userDocRef.set(newUser)
+                    .addOnSuccessListener {
+                        startActivity(Intent(this, SetDisplayNameActivity::class.java))
+                        finish()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("SignUpActivity", "Failed to save user profile", e)
+                        Toast.makeText(this, "Failed to save user profile", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, DashboardActivity::class.java)) // fallback
+                        finish()
+                    }
+            }
+        }.addOnFailureListener { e ->
+            Log.e("SignUpActivity", "userDocRef.get() failed", e)
+            Toast.makeText(this, "Failed to check profile", Toast.LENGTH_SHORT).show()
+            // fallback: go to dashboard
+            startActivity(Intent(this, DashboardActivity::class.java))
+            finish()
+        }
     }
 }

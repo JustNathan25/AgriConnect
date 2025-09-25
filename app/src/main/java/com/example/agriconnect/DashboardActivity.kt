@@ -1,8 +1,9 @@
 package com.example.agriconnect
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.example.agriconnect.chatfiles.ChatInboxFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DashboardActivity : AppCompatActivity() {
@@ -13,31 +14,40 @@ class DashboardActivity : AppCompatActivity() {
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
+        // Load Home by default
+        loadFragment(HomeFragment())
+
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
-                    // Load Home fragment (if you have one)
+                    loadFragment(HomeFragment())
                     true
                 }
                 R.id.nav_liked -> {
-                    // Open Liked fragment or activity
+                    loadFragment(LikedFragment())
                     true
                 }
                 R.id.nav_explore -> {
-                    // Open Explore fragment or activity
+                    loadFragment(ExploreFragment())
                     true
                 }
                 R.id.nav_chat -> {
-                    // 👉 Open MessagingActivity when Chat is clicked
-                    startActivity(Intent(this, MessagingActivity::class.java))
+                    // ✅ Show InboxFragment inside dashboard
+                    loadFragment(ChatInboxFragment())
                     true
                 }
                 R.id.nav_profile -> {
-                    // Open Profile fragment or activity
+                    loadFragment(ProfileFragment())
                     true
                 }
                 else -> false
             }
         }
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }

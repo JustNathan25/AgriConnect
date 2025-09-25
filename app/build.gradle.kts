@@ -62,6 +62,23 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("com.google.firebase:firebase-auth:23.0.0")
 
+    implementation("com.google.firebase:firebase-firestore:25.1.1") // latest
+    implementation("com.google.firebase:firebase-auth:23.1.0")    // for users
+
+
+    // RecyclerView, Material
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("com.google.android.material:material:1.9.0")
+
+
+    // Glide for image loading
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+
+
+    // CircleImageView (optional)
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+
     // UI libraries
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
@@ -70,4 +87,10 @@ dependencies {
     // Glide (with annotation processor for codegen)
     implementation(libs.glide)
     annotationProcessor("com.github.bumptech.glide:compiler:5.0.4")
+
+    //google map
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.android.libraries.places:places:3.5.0")
+
 }

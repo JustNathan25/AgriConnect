@@ -31,6 +31,9 @@
         <activity android:name=".SignInActivity" android:exported="true" />
         <activity android:name=".SignUpActivity" android:exported="true" />
 
+        <!-- Set Display Name Activity -->
+        <activity android:name=".SetDisplayNameActivity" android:exported="true" />
+
         <!-- Dashboard with Bottom Navigation -->
         <activity android:name=".DashboardActivity" android:exported="true" />
 
@@ -40,28 +43,23 @@
             android:excludeFromRecents="true"
             android:exported="false" />
 
-        <activity android:name=".MessagingActivity" android:exported="true" />
+        <!-- Messaging and Chat Activities -->
+        <activity android:name=".chatfiles.ChatRoomActivity" android:exported="true" />
 
+        <!-- Create Listing Activity -->
+        <activity android:name=".CreateListingActivity" android:exported="true" />
 
         <!-- Firebase Initialization -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher" />
 
-        <!-- (Optional) For deep linking if you use Firebase Dynamic Links -->
-        <!--
-        <activity
-            android:name=".DeepLinkHandlerActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https"
-                      android:host="yourapp.page.link" />
-            </intent-filter>
-        </activity>
-        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA3uupJpg9_MtuVIISgzndK36-leBxTq4A" />
+
+        <!-- Map Picker Activity -->
+        <activity android:name=".MapPickerActivity" />
 
     </application>
 

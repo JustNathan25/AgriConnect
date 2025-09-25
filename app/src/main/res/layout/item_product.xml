@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
-         />
+        android:contentDescription="@string/product_image" />
 
     <TextView
         android:id="@+id/productName"
@@ -37,4 +37,25 @@
         android:textColor="#666"
         android:textSize="12sp"
         android:paddingTop="2dp" />
+
+    <TextView
+        android:id="@+id/productCondition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Condition: New"
+        android:textColor="#444"
+        android:textSize="12sp"
+        android:paddingTop="2dp" />
+
+    <TextView
+        android:id="@+id/productDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Short description here..."
+        android:textColor="#777"
+        android:textSize="11sp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:paddingTop="2dp" />
+
 </LinearLayout>

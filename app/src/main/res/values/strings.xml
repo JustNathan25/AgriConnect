@@ -7,6 +7,12 @@
     <string name="agriconnect"><font color='#000000'>Agri</font><font color='#3A9C4C'>Connect</font></string>
     <string name="agriconnect2"><font color='#000000'>Linking</font><font color='#3A9C4C'> Farmers</font> <font color='#000000'> with</font>
         <font color='#3A9C4C'> Consumers </font><font color='#000000'> made</font><font color='#3A9C4C'> easy</font> </string>
-
-
+    <string name="product_image">Product Image</string>
+    <string name="app_condition">AgriConnect</string>
+    <string-array name="product_conditions">
+        <item>New</item>
+        <item>Used - Like New</item>
+        <item>Used - Good</item>
+        <item>Used - Fair</item>
+    </string-array>
 </resources>
